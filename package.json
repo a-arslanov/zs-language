@@ -1,0 +1,131 @@
+{
+	"name": "zs-language",
+	"description": "ZS language support",
+	"author": "Artur Arslanov",
+	"license": "MIT",
+	"version": "0.1.0",
+	"categories": [],
+	"workspaces": [
+		"client",
+		"server"
+	],
+	"engines": {
+		"vscode": "^1.75.0"
+	},
+	"activationEvents": [
+		"onDebug",
+		"onDebugResolve:zs"
+	],
+	"main": "./client/out/extension",
+	"types": "bindings/node",
+	"contributes": {
+		"grammars": [
+			{
+				"language": "zs",
+				"scopeName": "source.zs",
+				"path": "./syntaxes/zs.tmLanguage.json"
+			}
+		],
+		"breakpoints": [
+			{
+				"language": "zs"
+			}
+		],
+		"debuggers": [
+			{
+				"type": "zs",
+				"label": "ZS Debug",
+				"runtime": "node",
+				"languages": [
+					"zs"
+				],
+				"configurationAttributes": {
+					"launch": {
+						"required": [],
+						"properties": {
+							"cmd": {
+								"type": "string",
+								"description": "Command to run"
+							}
+						}
+					},
+					"attach": {
+						"required": []
+					}
+				},
+				"initialConfigurations": [
+					{
+						"type": "zs",
+						"request": "attach",
+						"name": "Attach zs process"
+					}
+				]
+			}
+		],
+		"configuration": {
+			"type": "object",
+			"title": "Configuration",
+			"properties": {
+				"zsLSP.root": {
+					"scope": "window",
+					"type": "string",
+					"default": "${workspaceFolder}",
+					"description": "Root directory"
+				},
+				"zsLSP.includes": {
+					"scope": "window",
+					"type": "array",
+					"items": {
+						"type": "string",
+						"format": "file"
+					},
+					"default": [],
+					"description": "Include directories"
+				}
+			}
+		},
+		"languages": [
+			{
+				"id": "zs",
+				"aliases": [
+					"zs",
+					"zi"
+				],
+				"extensions": [
+					"zs",
+					"zi"
+				],
+				"configuration": "./language-configuration.json"
+			}
+		]
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -b",
+		"watch": "tsc -b -w",
+		"lint": "eslint ./client/src ./server/src --ext .ts,.tsx",
+		"vsce": "vsce package",
+		"test": "node --enable-source-maps --experimental-strip-types -r @swc-node/register --test ./client/**/*.test.ts"
+	},
+	"devDependencies": {
+		"@swc-node/register": "^1.10.9",
+		"@types/node": "^22.9.0",
+		"@typescript-eslint/eslint-plugin": "^7.1.0",
+		"@typescript-eslint/parser": "^7.1.0",
+		"@vscode/vsce": "^3.1.0",
+		"esbuild": "^0.24.0",
+		"eslint": "^8.57.0",
+		"typescript": "^5.6.2"
+	},
+	"dependencies": {
+		"@types/vscode": "^1.95.0",
+		"@vscode/debugadapter": "^1.68.0",
+		"tiny-typed-emitter": "^2.1.0",
+		"tree-kill": "^1.2.2",
+		"tree-sitter": "^0.21.1",
+		"vscode-languageclient": "^9.0.1",
+		"vscode-languageserver": "^9.0.1",
+		"vscode-languageserver-textdocument": "^1.0.12",
+		"zs-lsp": "file:../../zs-lsp"
+	}
+}

@@ -1,0 +1,1 @@
+{"root":["./src/extension.ts","./src/Debugger/DebugAdapter.test.ts","./src/Debugger/DebugAdapter.ts","./src/Debugger/DebugAdapterFactory.ts","./src/Debugger/DebugConfigProvider.ts"],"version":"5.6.3"}
